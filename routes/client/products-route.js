@@ -1,17 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const controllers = require("../../controllers/client/products-controller");
 
-router.get("/", (req, res) => {
-  // Logic to fetch all products
-  res.render("client/pages/products/index", { title: "Products" });
-});
-
-router.get("/create", (req, res) => {
-  res.send("Create Product Page");
-});
-
-router.get("/edit", (req, res) => {
-  res.send("Edit Product Page");
-});
-
+router.get("/", controllers.getProducts);
 module.exports = router;

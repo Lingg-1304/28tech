@@ -1,6 +1,21 @@
-doctype html
-html
-    head
-        title Products Page
-    body
-        h1 Đây là Products 
+extends ../../layouts/default.pug
+
+block main  
+    .container.my-3
+        .row
+            .col-12
+                .box-head
+                    h2.inner-title Danh sách sản phẩm
+
+        .row
+            each product in products
+                .col-4.mb-4
+                    .product-item
+                        .inner-image
+                            img(src="https://tongkhodieuhoa68.com/wp-content/uploads/2023/02/dieu-hoa-panasonic-9000-btu-1-chieu-inverter-u9zkh-8-510x510-2.jpg", alt=product.title)
+                        .inner-content  
+                            p(class="product-title") #{product.title}
+                            p(class="product-price-old") #{product.price} $
+                            p(class="product-price-new") #{product.priceNew} $
+                            
+                            a.btn.btn-primary(href=`/products/${product.id}`) Xem chi tiết
