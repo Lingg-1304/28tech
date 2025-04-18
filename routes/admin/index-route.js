@@ -1,5 +1,8 @@
 const dashboardRoute = require("./dashboard-route");
+const systemConfig = require("../../config/system");
 
 module.exports = (app) => {
-  app.use("/admin", dashboardRoute); // Admin dashboard route
+  const PATH_ADMIN = systemConfig.prefixAdmin;
+
+  app.use(PATH_ADMIN + "/dashboard", dashboardRoute); // Admin dashboard route
 };

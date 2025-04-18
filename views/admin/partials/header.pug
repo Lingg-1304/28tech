@@ -1,0 +1,27 @@
+header.header-admin
+    .header-wrapper
+        .header-left
+            a.logo(href='/admin/dashboard')
+                img(src='/admin/images/logo.png', alt='Logo')
+            button.sidebar-toggle
+                i.fa.fa-bars
+        
+        .header-right
+            .admin-info
+                .admin-name Welcome, Admin
+                .dropdown
+                    button.dropdown-toggle
+                        i.fa.fa-user
+                        span.ml-2 Account
+                    .dropdown-menu
+                        a(href='/admin/profile')
+                            i.fa.fa-user-circle
+                            span Profile
+                        a(href='/admin/logout')
+                            i.fa.fa-sign-out
+                            span Logout
+            
+            .notifications
+                button.notification-toggle
+                    i.fa.fa-bell
+                    span.badge 3
