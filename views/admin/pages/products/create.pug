@@ -1,0 +1,76 @@
+extends ../../layouts/default.pug
+block main
+  if success && success.length
+    each msg in success
+      .alert.alert-success.alert-dismissible.fade.show.message-alert= msg
+        button.close(type="button" data-dismiss="alert" aria-label="Close")
+          span(aria-hidden="true") &times;
+
+  if error && error.length
+    each msg in error
+      .alert.alert-danger.alert-dismissible.fade.show.message-alert= msg
+        button.close(type="button" data-dismiss="alert" aria-label="Close")
+          span(aria-hidden="true") &times;
+  .container.mt-0
+    a.btn.btn-danger.mt-0.ml-2-mb4(href="/admin/products") Quay lại
+    h1.mb-4 Thêm sản phẩm
+    
+    form(action="/admin/products/create" method="POST")
+      .form-group
+        label(for="title") Tên sản phẩm 
+        input.form-control#title(type="text" name="title" required)
+      
+      .form-group
+        label(for="description") Mô tả
+        textarea.form-control#description(name="description" rows="4")
+      
+      .row
+        .col-md-4
+          .form-group
+            label(for="price") Giá
+            .input-group
+              .input-group-prepend
+                .input-group-text $
+              input.form-control#price(type="number" name="price" step="0.01" min="0" required)
+        
+        .col-md-4
+          .form-group
+            label(for="discountPercentage") Giảm giá (%)
+            .input-group
+              input.form-control#discountPercentage(type="number" name="discountPercentage" min="0" max="100" step="0.1")
+              .input-group-append
+                .input-group-text %
+        
+        .col-md-4
+          .form-group
+            label(for="stock") Số lượng hàng
+            input.form-control#stock(type="number" name="stock" min="0" required)
+      
+      .form-group
+        label(for="thumbnail") Ảnh
+        input.form-control#thumbnail(type="url" name="thumbnail" placeholder="https://example.com/image.jpg")
+      
+      .row       
+        .col-md-6
+          .form-group
+            label(for="position") Vị trí
+            input.form-control#position(type="number" name="position" min="0" value="0")
+      
+      .form-group.mt-4
+        button.btn.btn-primary.mr-2(type="submit") Create Product
+        a.btn.btn-secondary(href="/admin/products") Cancel
+  
+  script.
+    // Show/hide deletedAt field based on deleted checkbox
+    document.getElementById('deleted').addEventListener('change', function() {
+      const deletedAtGroup = document.getElementById('deletedAtGroup');
+      if (this.checked) {
+        deletedAtGroup.classList.remove('d-none');
+        // Set current datetime as default
+        const now = new Date();
+        now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+        document.getElementById('deletedAt').value = now.toISOString().slice(0, 16);
+      } else {
+        deletedAtGroup.classList.add('d-none');
+      }
+    });
