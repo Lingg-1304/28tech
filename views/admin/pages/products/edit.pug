@@ -1,0 +1,103 @@
+extends ../../layouts/default.pug
+
+block main
+  if success && success.length
+    each msg in success
+      .alert.alert-success.alert-dismissible.fade.show.message-alert= msg
+        button.close(type="button" data-dismiss="alert" aria-label="Close")
+          span(aria-hidden="true") &times;
+
+  if error && error.length
+    each msg in error
+      .alert.alert-danger.alert-dismissible.fade.show.message-alert= msg
+        button.close(type="button" data-dismiss="alert" aria-label="Close")
+          span(aria-hidden="true") &times;
+  .container.mt-0
+    a.btn.btn-danger.mt-0.ml-2-mb4(href="/admin/products") Quay lại
+    h1.mb-4.mt-1 Chỉnh sửa sản phẩm
+    form(method="POST", action=`/admin/products/edit/${product._id}`)
+      .form-group
+        label(for="title") Tên sản phẩm
+        input#title.form-control(
+          type="text", 
+          name="title", 
+          value=product.title, 
+          required
+        )
+
+      .form-group
+        label(for="description") Mô tả
+        textarea#description.form-control(name="description", rows="3") #{product.description}
+
+      .form-group
+        label(for="price") Giá ($)
+        input#price.form-control(
+          type="number", 
+          name="price", 
+          value=product.price,
+          step="0.01", 
+          min="0", 
+          required
+        )
+
+      .form-group
+        label(for="discountPercentage") Giảm giá (%)
+        input#discountPercentage.form-control(
+          type="number", 
+          name="discountPercentage", 
+          value=product.discountPercentage,
+          step="0.01", 
+          min="0", 
+          max="100"
+        )
+
+      .form-group
+        label(for="stock") Tồn kho
+        input#stock.form-control(
+          type="number", 
+          name="stock", 
+          value=product.stock, 
+          min="0", 
+          required
+        )
+
+      .form-group
+        label(for="thumbnail") Link ảnh sản phẩm
+        input#thumbnail.form-control(
+          type="text", 
+          name="thumbnail", 
+          value=product.thumbnail
+        )
+        if product.thumbnail
+          img.mt-2(src=product.thumbnail, alt="Ảnh sản phẩm", width="120")
+
+      .form-group
+        label(for="position") Vị trí hiển thị
+        input#position.form-control(
+          type="number", 
+          name="position", 
+          value=product.position || 1, 
+          min="1"
+        )
+
+      .form-group
+        label Trạng thái
+        .form-check
+          input.form-check-input#active(
+            type="radio", 
+            name="status", 
+            value="active", 
+            checked=product.status === 'active'
+          )
+          label.form-check-label(for="active") Còn bán
+        .form-check
+          input.form-check-input#inactive(
+            type="radio", 
+            name="status", 
+            value="inactive", 
+            checked=product.status === 'inactive'
+          )
+          label.form-check-label(for="inactive") Dừng bán
+
+      button.btn.btn-success.mt-3(type="submit") Lưu thay đổi
+      a.btn.btn-secondary.mt-3.ml-2(href="/admin/products") Huỷ bỏ

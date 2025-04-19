@@ -1,1 +1,19 @@
-.sider Sider 
+aside.sider-admin(style="min-height: 100vh; width: 220px; background-color: #dee2e6;")
+  nav.nav.flex-column.p-3
+    h5.text-dark.font-weight-bold.mb-4.ml-1
+      i.fas.fa-cogs.mr-2
+      | Quản trị
+
+    a.nav-link.d-flex.align-items-center(
+      href=prefixAdmin + '/dashboard',
+      class=(currentPath.startsWith(prefixAdmin + '/dashboard') ? 'active font-weight-bold text-dark' : 'text-muted')
+    )
+      i.fas.fa-home.mr-2
+      | Tổng quan
+
+    a.nav-link.d-flex.align-items-center(
+      href=prefixAdmin + '/products',
+      class=(currentPath.startsWith(prefixAdmin + '/products') ? 'active font-weight-bold text-dark' : 'text-muted')
+    )
+      i.fas.fa-box.mr-2
+      | Sản phẩm

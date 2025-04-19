@@ -14,7 +14,7 @@ module.exports.getProducts = async (req, res) => {
     return product;
   });
 
-  console.log(newProducts);
+  // console.log(newProducts);
 
   res.render("client/pages/products/index", {
     title: "Products",
