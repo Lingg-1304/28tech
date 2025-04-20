@@ -26,18 +26,10 @@ block main
             .dropdown.mr-3
               button.btn.btn-outline-secondary.dropdown-toggle(type="button" data-toggle="dropdown") Sắp xếp
               .dropdown-menu
-                a.dropdown-item(href="#") Giá: Thấp đến cao
-                a.dropdown-item(href="#") Giá: Cao đến thấp
-                a.dropdown-item(href="#") Mới nhất
-                a.dropdown-item(href="#") Phổ biến nhất
-            
-            .btn-group.btn-group-toggle(data-toggle="buttons")
-              label.btn.btn-outline-secondary.active
-                input(type="radio" name="view" checked)
-                i.fa.fa-th
-              label.btn.btn-outline-secondary
-                input(type="radio" name="view")
-                i.fa.fa-list
+                a.dropdown-item(href="/products?sort=price_asc") Giá: Thấp đến cao
+                a.dropdown-item(href="/products?sort=price_desc") Giá: Cao đến thấp
+                a.dropdown-item(href="/products?sort=newest") Mới nhất
+                a.dropdown-item(href="/products?sort=popular") Phổ biến nhất
       
       .row
         each product in products
@@ -81,4 +73,4 @@ block main
                   p.card-text.small.text-muted.mt-2 #{product.description.substring(0, 80)}...
               
               .card-footer.bg-white.border-0
-                a.btn.btn-primary.btn-block(href=`/products/${product.id}`) Xem chi tiết
+                a.btn.btn-primary.btn-block(href=`/products/${product.slug}`) Xem chi tiết

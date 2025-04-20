@@ -8,6 +8,8 @@ const connectDB = require("./config/database.js");
 const systemConfig = require("./config/system.js");
 
 const methodOverride = require("method-override");
+
+// req.flash()
 const flash = require("express-flash");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
@@ -23,11 +25,12 @@ app.locals.prefixAdmin = systemConfig.prefixAdmin;
 // console.log(app.locals.prefixAdmin);
 
 app.set("view engine", "pug");
-app.set("views", "./views");
+app.set("views", `${__dirname}/views`);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static("public"));
+
+app.use(express.static(`${__dirname}/public`));
 app.use(methodOverride("_method"));
 
 // Parse cookies

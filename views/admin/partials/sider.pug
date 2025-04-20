@@ -1,19 +1,23 @@
-aside.sider-admin(style="min-height: 100vh; width: 220px; background-color: #dee2e6;")
-  nav.nav.flex-column.p-3
-    h5.text-dark.font-weight-bold.mb-4.ml-1
+aside#adminSidebar.sider-admin.d-flex.flex-column(
+  style="min-height: 100vh; width: 260px; transition: all 0.3s ease;"
+)
+  nav.nav.flex-column.py-4.px-3
+    // Sidebar header
+    h5.mb-4.d-flex.align-items-center.px-3.text-uppercase.text-primary.font-weight-bold
       i.fas.fa-cogs.mr-2
       | Quản trị
 
-    a.nav-link.d-flex.align-items-center(
+    // Navigation links
+    a.nav-link.d-flex.align-items-center.rounded.mb-1.px-3.py-2(
       href=prefixAdmin + '/dashboard',
-      class=(currentPath.startsWith(prefixAdmin + '/dashboard') ? 'active font-weight-bold text-dark' : 'text-muted')
+      class=(currentPath.startsWith(prefixAdmin + '/dashboard') ? 'active' : '')
     )
-      i.fas.fa-home.mr-2
+      i.fas.fa-home.mr-3
       | Tổng quan
 
-    a.nav-link.d-flex.align-items-center(
+    a.nav-link.d-flex.align-items-center.rounded.mb-1.px-3.py-2(
       href=prefixAdmin + '/products',
-      class=(currentPath.startsWith(prefixAdmin + '/products') ? 'active font-weight-bold text-dark' : 'text-muted')
+      class=(currentPath.startsWith(prefixAdmin + '/products') ? 'active' : '')
     )
-      i.fas.fa-box.mr-2
+      i.fas.fa-box.mr-3
       | Sản phẩm

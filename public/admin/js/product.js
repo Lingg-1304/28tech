@@ -12,3 +12,14 @@ if (buttonsChangeStatus.length > 0) {
   });
 }
 // end change status
+
+// Notifications
+document.addEventListener("DOMContentLoaded", () => {
+  const alerts = document.querySelectorAll(".alert.alert-dismissible");
+  alerts.forEach((alert) => {
+    setTimeout(() => {
+      // Trigger Bootstrap's alert close method
+      $(alert).alert("close");
+    }, 1000); // 2 seconds
+  });
+});

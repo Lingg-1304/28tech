@@ -1,76 +1,82 @@
 extends ../../layouts/default.pug
+
 block main
+  //- // Notifications
   if success && success.length
     each msg in success
-      .alert.alert-success.alert-dismissible.fade.show.message-alert= msg
-        button.close(type="button" data-dismiss="alert" aria-label="Close")
+      .alert.alert-success.alert-dismissible.fade.show.shadow-sm.border-left.border-success.border-4.rounded-0.mb-3(role="alert")
+        .d-flex.align-items-center
+          i.fas.fa-check-circle.mr-3.text-success.fa-lg
+          div= msg
+        button.close(type="button", data-dismiss="alert", aria-label="Close")
           span(aria-hidden="true") &times;
 
   if error && error.length
     each msg in error
-      .alert.alert-danger.alert-dismissible.fade.show.message-alert= msg
-        button.close(type="button" data-dismiss="alert" aria-label="Close")
+      .alert.alert-danger.alert-dismissible.fade.show.shadow-sm.border-left.border-danger.border-4.rounded-0.mb-3(role="alert")
+        .d-flex.align-items-center
+          i.fas.fa-exclamation-circle.mr-3.text-danger.fa-lg
+          div= msg
+        button.close(type="button", data-dismiss="alert", aria-label="Close")
           span(aria-hidden="true") &times;
-  .container.mt-0
-    a.btn.btn-danger.mt-0.ml-2-mb4(href="/admin/products") Quay lại
-    h1.mb-4 Thêm sản phẩm
-    
-    form(action="/admin/products/create" method="POST")
-      .form-group
-        label(for="title") Tên sản phẩm 
-        input.form-control#title(type="text" name="title" required)
-      
-      .form-group
-        label(for="description") Mô tả
-        textarea.form-control#description(name="description" rows="4")
-      
-      .row
-        .col-md-4
+  .container.py-4
+    //- // Page Header
+    .d-flex.justify-content-between.align-items-center.mb-4
+      h1.h2.mb-0 Thêm sản phẩm mới
+      a.btn.btn-outline-danger(href="/admin/products")
+        i.fas.fa-arrow-left.mr-2
+        | Quay lại
+
+    //- // Product Form
+    .card.shadow-sm
+      .card-body
+        form(method="POST", action="/admin/products/create", enctype="multipart/form-data")
+          .row
+            .col-md-6
+              .form-group
+                label.font-weight-bold(for="title") Tên sản phẩm
+                input#title.form-control(type="text", name="title", required, placeholder="Nhập tên sản phẩm")
+
+              .form-group
+                label.font-weight-bold(for="description") Mô tả
+                textarea#description.form-control(name="description", rows="4", placeholder="Nhập mô tả sản phẩm", required)
+
+            .col-md-6
+              .form-group
+                label.font-weight-bold(for="price") Giá ($)
+                .input-group
+                  .input-group-prepend
+                    span.input-group-text $
+                  input#price.form-control(type="number", name="price", step="0.01", min="0", required, placeholder="0.00")
+
+              .form-group
+                label.font-weight-bold(for="discountPercentage") Giảm giá (%)
+                .input-group
+                  input#discountPercentage.form-control(type="number", name="discountPercentage", step="0.01", min="0", max="100", placeholder="0")
+                  .input-group-append
+                    span.input-group-text %
+
+              .form-group
+                label.font-weight-bold(for="stock") Tồn kho
+                input#stock.form-control(type="number", name="stock", min="0", required, placeholder="0")
+
           .form-group
-            label(for="price") Giá
-            .input-group
-              .input-group-prepend
-                .input-group-text $
-              input.form-control#price(type="number" name="price" step="0.01" min="0" required)
-        
-        .col-md-4
-          .form-group
-            label(for="discountPercentage") Giảm giá (%)
-            .input-group
-              input.form-control#discountPercentage(type="number" name="discountPercentage" min="0" max="100" step="0.1")
-              .input-group-append
-                .input-group-text %
-        
-        .col-md-4
-          .form-group
-            label(for="stock") Số lượng hàng
-            input.form-control#stock(type="number" name="stock" min="0" required)
-      
-      .form-group
-        label(for="thumbnail") Ảnh
-        input.form-control#thumbnail(type="url" name="thumbnail" placeholder="https://example.com/image.jpg")
-      
-      .row       
-        .col-md-6
-          .form-group
-            label(for="position") Vị trí
-            input.form-control#position(type="number" name="position" min="0" value="0")
-      
-      .form-group.mt-4
-        button.btn.btn-primary.mr-2(type="submit") Create Product
-        a.btn.btn-secondary(href="/admin/products") Cancel
-  
+            label.font-weight-bold(for="thumbnail") Ảnh sản phẩm
+            .custom-file
+              input#thumbnail.custom-file-input(type="file", name="thumbnail", accept="image/*", required)
+              label.custom-file-label(for="thumbnail") Chọn tệp ảnh
+
+          hr.my-4
+
+          .d-flex.justify-content-end
+            a.btn.btn-light.mr-2(href="/admin/products") Huỷ bỏ
+            button.btn.btn-primary(type="submit")
+              i.fas.fa-save.mr-1
+              | Thêm sản phẩm
   script.
-    // Show/hide deletedAt field based on deleted checkbox
-    document.getElementById('deleted').addEventListener('change', function() {
-      const deletedAtGroup = document.getElementById('deletedAtGroup');
-      if (this.checked) {
-        deletedAtGroup.classList.remove('d-none');
-        // Set current datetime as default
-        const now = new Date();
-        now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
-        document.getElementById('deletedAt').value = now.toISOString().slice(0, 16);
-      } else {
-        deletedAtGroup.classList.add('d-none');
-      }
+    // Update file input label with file name
+    document.querySelector('.custom-file-input').addEventListener('change', function(e) {
+      const fileName = e.target.files[0].name;
+      const label = e.target.nextElementSibling;
+      label.textContent = fileName;
     });
